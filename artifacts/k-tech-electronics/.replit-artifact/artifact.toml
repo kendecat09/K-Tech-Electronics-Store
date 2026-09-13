@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "K-Tech Electronics"
+description = "A polished UK electronics storefront for discovering and shopping phones, computers, gaming gear, audio, and smart-home devices, with service support and contact information."
+version = "1.0.0"
+id = "artifacts/k-tech-electronics"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18761
+
+[services.development]
+run = "pnpm --filter @workspace/k-tech-electronics run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/k-tech-electronics", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/k-tech-electronics/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18761"
+BASE_PATH = "/"
